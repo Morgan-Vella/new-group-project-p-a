@@ -1,29 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import "./LoginReg.css";
+import { Routes, Route } from "react-router-dom";
+import Login from "./views/Login.jsx";
+import Signup from "./views/Signup.jsx";
+import Dashboard from "./views/Dashboard.jsx";
+import PublicRoute from "./views/PublicRoute.jsx";
+import ProtectedRoute from "./views/ProtectedRoute.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Portfolio</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
+      <Routes>
+        <Route path="/login" element={<PublicRoute element={<Login />} />} />
+        <Route path="/signup" element={<PublicRoute element={<Signup />} />} />
+        <Route path="/" element={<ProtectedRoute element={<Dashboard />} />} />
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
