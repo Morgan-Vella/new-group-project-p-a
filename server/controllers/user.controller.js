@@ -17,7 +17,7 @@ export const UserController = {
 
     getUserById: async (req, res) => {
         try {
-            const oneUser= await User.findById(req.params.id)
+            const oneUser = await User.findById(req.params.id).populate("artworks")
             res.json(oneUser)
         }
         catch (error) {
@@ -38,26 +38,26 @@ export const UserController = {
     },
 
     loginUser: async (req, res) => {
-        try{
-            const {email, password} = req.body
+        try {
+            const { email, password } = req.body
             const foundUser = await User.findOne({ email })
-            if(!foundUser){
-                return res.status(400).json({message: ["Invalid user credentials"]})
+            if (!foundUser) {
+                return res.status(400).json({ message: ["Invalid user credentials"] })
             }
 
             const isMatch = await bcrypt.compare(password, foundUser.password)
-            if(!isMatch){
-                return res.status(400).json({message: ["Invalid user credentials"]})
+            if (!isMatch) {
+                return res.status(400).json({ message: ["Invalid user credentials"] })
             }
 
-            const token = jwt.sign({id: foundUser._id}, process.env.JWT_SECRET, {
+            const token = jwt.sign({ id: foundUser._id }, process.env.JWT_SECRET, {
                 expiresIn: "1h"
             })
 
-            res.json({user: foundUser, token})
+            res.json({ user: foundUser, token })
         } catch {
             console.log(error)
-            res.status(500).json({message: "Server error"})
+            res.status(500).json({ message: "Server error" })
         }
     },
 

@@ -1,12 +1,12 @@
-import {model, Schema} from "mongoose"
+import { model, Schema } from "mongoose"
 import bcrypt from "bcrypt"
 
 const UserSchema = new Schema({
-    name:{
+    name: {
         type: String,
         required: [true, "Name is required!"],
         minlength: [2, "Name must be at least 2 characters long."],
-        maxLength: [255,"Name can not be longer than 255 characters."]
+        maxLength: [255, "Name can not be longer than 255 characters."]
     },
     email: {
         type: String,
@@ -18,20 +18,24 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         minlength: [8, "Password must be at least 8 characters!"]
+    },
+    artwork: {
+        type: Schema.Types.ObjectId,
+        ref: "Artwork"
     }
 },
-{
-    timestamps: true
-});
+    {
+        timestamps: true
+    });
 
-UserSchema.pre("save", async function(next){
-    if(!this.isModified("password")) return next;
+UserSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) return next;
 
-    try{
+    try {
         const salt = await bcrypt.genSalt(10)
         this.password = await bcrypt.hash(this.password, salt)
         next()
-    } catch (err){
+    } catch (err) {
         next(err)
     }
 })
