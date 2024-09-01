@@ -1,18 +1,12 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import "./LoginReg.css";
 import { Routes, Route } from "react-router-dom";
 import Login from "./views/Login.jsx";
 import Signup from "./views/Signup.jsx";
 import Dashboard from "./views/Dashboard.jsx";
 import PublicRoute from "./views/PublicRoute.jsx";
 import ProtectedRoute from "./views/ProtectedRoute.jsx";
-
+import "./LoginReg.css";
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
       <Routes>
