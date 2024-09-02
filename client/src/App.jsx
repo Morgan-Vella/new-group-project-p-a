@@ -15,7 +15,7 @@ function App() {
         <Route path="/login" element={<PublicRoute element={<Login />} />} />
         <Route path="/signup" element={<PublicRoute element={<Signup />} />} />
         <Route path="/" element={<ProtectedRoute element={<Dashboard />} />} />
-        <Route path="/create" element= {<CreateArt />} />
+        <Route path="/artwork/create" element= {<CreateArt />} />
         <Route path="/edit" element= {<EditArt />} />
       </Routes>
     </>
