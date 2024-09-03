@@ -1,10 +1,11 @@
 import Artwork from "../models/artwork.model.js"
+import User from "../models/user.model.js"
 
 export const ArtworkController = {
 
     getAllArtworks: async (req, res) => {
         try {
-            const allArtworks = await Artwork.find()
+            const allArtworks = await Artwork.find().populate('user').exec()
             res.json(allArtworks)
         }
         catch (error) {
@@ -15,7 +16,7 @@ export const ArtworkController = {
 
     getArtworkById: async (req, res) => {
         try {
-            const oneArtwork= await Artwork.findById(req.params.id)
+            const oneArtwork = await Artwork.findById(req.params.id).populate("user").exec()
             res.json(oneArtwork)
         }
         catch (error) {
@@ -27,6 +28,9 @@ export const ArtworkController = {
     createArtwork: async (req, res) => {
         try {
             const newArtwork = await Artwork.create(req.body)
+            const user = await User.findById(newArtwork.user)
+            user.artworks.push(newArtwork)
+            console.log(user.artworks)
             res.json(newArtwork)
         }
         catch (error) {

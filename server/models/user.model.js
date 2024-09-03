@@ -18,7 +18,11 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         minlength: [8, "Password must be at least 8 characters!"]
-    }
+    },
+    artworks: [{
+        type: Schema.Types.ObjectId,
+        ref: "Artwork"
+    }]
 },
 {
     timestamps: true
@@ -36,5 +40,5 @@ UserSchema.pre("save", async function(next){
     }
 })
 
-const User = model("users", UserSchema)
+const User = model("User", UserSchema)
 export default User

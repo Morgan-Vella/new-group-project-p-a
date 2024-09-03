@@ -12,9 +12,8 @@ PortfolioRouter.route("/portfolio/user/create").post(UserController.createUser);
 
 PortfolioRouter.route("/portfolio/user/login").post(UserController.loginUser);
 
-PortfolioRouter.route("/portfolio/artwork/create").post(
-  ArtworkController.createArtwork
-);
+PortfolioRouter.route("/portfolio/artwork/create")
+.post(ArtworkController.createArtwork);
 
 PortfolioRouter.route("/portfolio/user/:id")
   .get(UserController.getUserById)
