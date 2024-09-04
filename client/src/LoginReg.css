@@ -124,3 +124,27 @@ label {
 .login-button:focus {
   outline: none;
 }
+
+.all-forums{
+  height: 100vh;
+}
+
+.navbar-containerimg{
+  background-image: url("./assets/Navbar.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 10vh;
+}
+
+.nav-flex{
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 10px;
+}
+.btn-style{
+  display: flex;
+  gap: 20px;
+}
