@@ -1,92 +1,97 @@
-import { useState } from "react"
-import {useNavigate, Link} from "react-router-dom"
+import React, { useState } from "react";
 import axios from "axios";
-
-import ArtService from "../services/ArtService";
-
+import "../CreateArt.css";
+import { useNavigate } from "react-router-dom";
 
 const CreateArt = () => {
-   
-    const [artData, setArtData] = useState({
-        name:"",
-        description:"",
-        image:"",
-        user_id:""
-    });
-    const [errors, setErrors] = useState({
-    });
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState(null);
+  const [errorMessages, setErrorMessages] = useState({}); 
 
-    const navigate = useNavigate();
-    
-    const updatedArtInput = (e) => {
-        const {name, value} = e.target;
-        setArtData( prev => ( {...prev, [name]: value} ))
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const user_id = localStorage.getItem("user_id"); 
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("image", image);
+    formData.append("user_id", user_id); 
+    try {
+      const response = await axios.post(
+        "http://localhost:9999/api/portfolio/artwork/create",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response.data);
+      navigate("/");
+      
+      setErrorMessages({});
+      setName("");
+      setDescription("");
+      setImage(null);
+    } catch (error) {
+      if (error.response && error.response.data) {
+        setErrorMessages(error.response.data); 
+      } else {
+        console.error(error);
+      }
     }
-    
-    const submitHandler = (e) => {
-        e.preventDefault();
-        ArtService.createArt(artData)     
-        .then(res => {
-            setArtData({
-              "name":"",
-              "description":"",
-              "image":"",
-              "user_id":""
-            })
-            console.log(res.data);
-            navigate("/"); 
-          })
-        .catch(err => {
-            console.log("server Error", err)
-            setErrors(err.response.data.errors);
-        });
-    };
+  };
 
-    return (
-    <>
-    <div className="container">
-        <nav className="d-flex justify-content-between my-3">
-            <h1>Artistree</h1>
-            <Link to = '/'> back to home</Link>
-            <Link to = '/login'> Logout</Link>
-        </nav>
-        
-        <form onSubmit={submitHandler}>
-            <main>
-                <label htmlFor="name">
-                    Art Title:
-                </label>
-                    <input type="text"
-                     name = "name"
-                     id = "name"
-                     value={artData.name}
-                     onChange={updatedArtInput}/>
-                <label htmlFor="description">
-                    Description:
-                </label>
-                    <textarea 
-                    name="description" 
-                    id="description" 
-                    value={artData.description} 
-                    onChange={updatedArtInput} 
-                    cols="30" rows="10">
-                    </textarea>
-                <label htmlFor="image">
-                    Upload an image:
-                </label>
-                    <input type = "text"
-                     name = "image"
-                     id = "image"
-                     value={artData.image}
-                     onChange={updatedArtInput}/>
-            </main>
-            <input type="hidden" name="user_id" id= "user_id" value={artData.user_id} onChange={updatedArtInput}/>
-            <button>Create!</button>
-        </form>
+  return (
+    <div className="container" style={{ marginTop: "200px" }}>
+      <h1>Create Artwork</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          {errorMessages.name && (
+            <p className="error-message">{errorMessages.name}</p>
+          )}
+        </div>
+        <div>
+          <label htmlFor="description">Description:</label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+          {errorMessages.description && (
+            <p className="error-message">{errorMessages.description}</p>
+          )}
+        </div>
+        <div>
+          <label htmlFor="image">Image:</label>
+          <input type="file" id="image" onChange={handleImageChange} required />
+          {errorMessages.image && (
+            <p className="error-message">{errorMessages.image}</p>
+          )}
+        </div>
+        {errorMessages.general && (
+          <p className="error-message">{errorMessages.general}</p>
+        )}
+        <button type="submit">Submit</button>
+      </form>
     </div>
-    </>
-    )
-
+  );
 };
 
 export default CreateArt;

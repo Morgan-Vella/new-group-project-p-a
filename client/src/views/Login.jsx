@@ -7,8 +7,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const [loginErrorMessage, setLoginErrorMessage] = useState(""); //  state for login error
-
+  const [loginErrorMessage, setLoginErrorMessage] = useState("");
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -22,6 +21,8 @@ const Login = () => {
 
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", response.data.user.name);
+      localStorage.setItem("user_id", response.data.user._id);
+      console.log(response.data.user._id);
       navigate("/");
     } catch (error) {
       if (error.response && error.response.data.messages) {
