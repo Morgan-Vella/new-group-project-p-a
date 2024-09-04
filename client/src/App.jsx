@@ -1,4 +1,4 @@
-import "./App.css";
+
 import { Routes, Route } from "react-router-dom";
 import Login from "./views/Login.jsx";
 import Signup from "./views/Signup.jsx";
@@ -7,7 +7,8 @@ import CreateArt from "./views/CreateArt.jsx";
 import EditArt from "./views/EditArt.jsx";
 import PublicRoute from "./views/PublicRoute.jsx";
 import ProtectedRoute from "./views/ProtectedRoute.jsx";
-import "./LoginReg.css";
+import ParentComponent from "./views/ParentComponent.jsx";
+import "./LoginReg.css"
 function App() {
   return (
     <>
@@ -17,6 +18,8 @@ function App() {
         <Route path="/" element={<ProtectedRoute element={<Dashboard />} />} />
         <Route path="/artwork/create" element= {<CreateArt />} />
         <Route path="/edit" element= {<EditArt />} />
+        <Route path="/parent" element= {<ParentComponent />} />
+        
       </Routes>
     </>
   );

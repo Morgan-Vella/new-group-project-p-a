@@ -4,14 +4,15 @@ import axios from "axios";
 import navbar from "../assets/Navbar.jpg";
 import ArtService from "../services/ArtService";
 import UserService from "../services/UserService";
+import ForumNav from "../components/ForumNav";
 
-const CreateArt = () => {
+const CreateArt = ({userId}) => {
    
     const [artData, setArtData] = useState({
         name:"",
         description:"",
         image:"",
-        user:""
+        user:userId
     });
 
     const [errors, setErrors] = useState({});
@@ -28,7 +29,7 @@ const CreateArt = () => {
         if (id) {
             UserService.getUserId(id)
                 .then(res=> {
-                    setArtData(prev => ({ ...prev, user_id: res._id }));
+                    setArtData(prev => ({ ...prev, user: res._id }));
                 })
                 // .then((res) = {
                     // setArtData(res);
@@ -50,7 +51,7 @@ const CreateArt = () => {
               "name":"",
               "description":"",
               "image":"",
-              user:""
+              user:userId
             })
             console.log(res.data);
             navigate("/"); 
@@ -69,21 +70,13 @@ const CreateArt = () => {
     return (
     <> 
     <div className="all-forums">
-        <div className="navbar-containerimg">
-            <nav className="nav-flex">
-                <h1 className="m-3" style={{color:"#dea45a"}}>Artistree</h1>
-                <div className="btn-style">
-                    <Link to = '/' className="text-decoration-none" style={{color:"#F8F6F0"}}> back to home</Link>
-                    <button className = "text-decoration-none"onClick={handleLogout}>
-                    Logout
-                    </button>
-                </div>
-            </nav>
-        </div>
+        <ForumNav/>
+        {/*   */}
         
         <form onSubmit={submitHandler}>
-            <main className="mx-3">
-                <label htmlFor="name" className="my-3">
+            <main className="main-content">
+                <h1 className="my-4">Create Thread</h1>
+                <label htmlFor="name" className="m-3 h5">
                     Art Title:
                     <input type="text"
                      name = "name"
@@ -92,7 +85,7 @@ const CreateArt = () => {
                      onChange={updatedArtInput}/>
                 </label>
                 {/* {errors.name && <p className="text-danger">{errors.name.message}</p>} */}
-                <label htmlFor="description">
+                <label htmlFor="description" className="m-3 h5">
                     Description:
                 </label>
                     <textarea 
@@ -100,21 +93,23 @@ const CreateArt = () => {
                     id="description" 
                     value={artData.description} 
                     onChange={updatedArtInput} 
+                    className="mx-3"
                     cols="30" rows="5">
                     </textarea>
                 {/* {errors.description && <p className="text-danger">{errors.description.message}</p>} */}
-                <label htmlFor="image">
+                <label htmlFor="image" className="m-3 h5">
                     Upload an image:
                 </label>
                     <input type = "text"
                      name = "image"
                      id = "image"
                      value={artData.image}
-                     onChange={updatedArtInput}/>
+                     onChange={updatedArtInput}
+                     className="mx-3"/>
+            <button className="m-3">Create!</button>
             </main>
                 <div>{artData.user_id}</div>
             <input type="hidden" name="user_id" id= "user_id" value={artData.user_id} onChange={updatedArtInput}/>
-            <button className="m-3">Create!</button>
         </form>
     </div>
     </>

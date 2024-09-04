@@ -44,6 +44,7 @@ const Login = () => {
               className="login-img"
             />
           </div>
+          
           <div className="login-container">
             <h2 style={{ color: "white" }}>Login</h2>
             {loginErrorMessage && (

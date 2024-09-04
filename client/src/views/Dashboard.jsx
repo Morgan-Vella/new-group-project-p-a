@@ -1,11 +1,12 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 const Dashboard = () => {
   return (
     <>
       <Navbar />
+      <Link to = '/artwork/create'> Create</Link>
     </>
   );
 };
