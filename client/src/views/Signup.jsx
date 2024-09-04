@@ -31,6 +31,8 @@ const Signup = () => {
 
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", signupName);
+      localStorage.setItem("user_id", response.data.user._id);
+      console.log(response.data.user._id);
       navigate("/");
     } catch (error) {
       if (error.response && error.response.data.messages) {
@@ -55,9 +57,11 @@ const Signup = () => {
           </div>
           <div className="login-container">
             <h2 className="textcolor">Sign Up</h2>
+
             {signupErrorMessage && (
               <p className="error-message">{signupErrorMessage}</p>
             )}
+
             <form onSubmit={handleSignupSubmit} className="signup-form">
               <div className="form-group ">
                 <label htmlFor="signup-name subtext" className="subtext">

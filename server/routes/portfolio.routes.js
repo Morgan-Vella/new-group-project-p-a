@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { UserController } from "../controllers/user.controller.js";
 import { ArtworkController } from "../controllers/artwork.controller.js";
+import upload from "../config/multer.config.js";
 
 const PortfolioRouter = Router();
 
@@ -13,6 +14,7 @@ PortfolioRouter.route("/portfolio/user/create").post(UserController.createUser);
 PortfolioRouter.route("/portfolio/user/login").post(UserController.loginUser);
 
 PortfolioRouter.route("/portfolio/artwork/create").post(
+  upload.single("image"),
   ArtworkController.createArtwork
 );
 
