@@ -64,7 +64,7 @@ const ArtworkDetails = () => {
             </p>
             <p className="card-text">
               <small className="text-muted">
-                Created by: {artwork.user_id.name}
+                Created BY: {artwork.user_id ? artwork.user_id.name : "Unknown"}
               </small>
             </p>
             {artwork.user_id._id === userIdFromStorage && (

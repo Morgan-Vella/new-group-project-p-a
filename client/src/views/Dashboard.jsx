@@ -19,6 +19,8 @@ const Dashboard = () => {
     fetchArtworks();
   }, []);
 
+  console.log(artworks);
+
   return (
     <>
       <Navbar>
@@ -54,7 +56,8 @@ const Dashboard = () => {
                       </p>
                       <p className="card-text">
                         <small className="text-muted">
-                          Created by: {artwork.user_id.name}
+                          Created BY:{" "}
+                          {artwork.user_id ? artwork.user_id.name : "Unknown"}
                         </small>
                       </p>
                     </div>
