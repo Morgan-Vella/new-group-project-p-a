@@ -64,10 +64,6 @@ const EditArt = () => {
 
   return (
     <>
-      {
-        name != localStorage.getItem("username") ?
-        navigate("/") : ""
-      }
     <Navbar></Navbar>
     <div className="container" style={{ marginTop: "50px" }}>
       <div className="text-center">
