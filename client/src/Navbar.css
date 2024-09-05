@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .nav {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-image: url("./assets/Navback.jpg");
+    background-size: cover;
+    height: 15vh;
+  }
+
+  .link-style{
+    display: flex;
+    align-items: center;
+    gap:30px;
+    margin-right: 20px;
+    
+  }

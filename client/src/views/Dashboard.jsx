@@ -22,11 +22,9 @@ const Dashboard = () => {
   return (
     <>
       <Navbar>
-        <Link to="/create" className="btn btn-primary mb-4">
-          Create Artwork
-        </Link>
+  
       </Navbar>
-      <div className="container">
+      <div className="container mt-4">
         <div className="row">
           {artworks.map((artwork) => {
             const imagePath = artwork.image.replace(/\\/g, "/");
@@ -37,7 +35,7 @@ const Dashboard = () => {
                   to={`/details/${artwork._id}`}
                   className="text-decoration-none"
                 >
-                  <div className="card">
+                  <div className="card bg-image hover-zoom">
                     <img
                       src={`http://localhost:9999/${imagePath}`} 
                       className="card-img-top"

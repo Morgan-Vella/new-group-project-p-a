@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Navbar from "../components/Navbar";
 
 const ArtworkDetails = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [artwork, setArtwork] = useState(null);
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   useEffect(() => {
     const fetchArtwork = async () => {
@@ -19,11 +22,27 @@ const ArtworkDetails = () => {
     fetchArtwork();
   }, [id]);
 
+  useEffect(() => {
+    const userId = localStorage.getItem("user_id");
+    setCurrentUserId(userId);
+  }, []);
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:9999/api/portfolio/artwork/${artwork._id}`);
+      navigate("/");
+    } catch (error) {
+      console.error("Error deleting artwork:", error);
+    }
+  };
+
   if (!artwork) return <div>Loading...</div>;
 
   const imagePath = artwork.image.replace(/\\/g, "/");
 
   return (
+    <>
+    <Navbar></Navbar>
     <div className="container mt-4">
       <div className="card">
         <img
@@ -39,6 +58,12 @@ const ArtworkDetails = () => {
               Created at: {new Date(artwork.createdAt).toLocaleDateString()}
             </small>
           </p>
+          {currentUserId === artwork.user_id._id && (
+            <div className="d-flex gap-3 mb-2">
+              <Link to={`/edit/${artwork._id}`} className="btn btn-success text-decoration-none">Edit</Link>
+              <button onClick={handleDelete} className="btn btn-danger">Delete</button>
+            </div>
+          )}
           <p className="card-text">
             <small className="text-muted">
               Created by: {artwork.user_id.name}
@@ -47,6 +72,7 @@ const ArtworkDetails = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

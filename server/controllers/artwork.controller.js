@@ -56,13 +56,17 @@ export const ArtworkController = {
       runValidators: true,
     };
     try {
-      const updatedArtwork = await Artwork.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        options
-      );
-      res.json(updatedArtwork);
-    } catch (error) {
+      const { name, description, user_id } = req.body;
+      const image = req.file.path;
+
+      const updatedArtwork = await Artwork.findByIdAndUpdate(req.params.id, {
+        name,
+        description,
+        image,
+        user_id,
+        }, options);  
+        res.json(updatedArtwork);
+      } catch (error) {
       console.log(error);
       res.status(400).json(error);
     }

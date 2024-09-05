@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../CreateArt.css";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 const CreateArt = () => {
   const navigate = useNavigate();
@@ -33,6 +34,8 @@ const CreateArt = () => {
           },
         }
       );
+      localStorage.setItem("artwork_id", response.data._id)
+      console.log(response.data._id)
       console.log(response.data);
       navigate("/");
       
@@ -50,7 +53,9 @@ const CreateArt = () => {
   };
 
   return (
-    <div className="container" style={{ marginTop: "200px" }}>
+  <>
+     <Navbar></Navbar>
+    <div className="container" style={{ marginTop: "50px" }}>
       <h1>Create Artwork</h1>
       <form onSubmit={handleSubmit}>
         <div>
@@ -91,6 +96,7 @@ const CreateArt = () => {
         <button type="submit">Submit</button>
       </form>
     </div>
+  </>
   );
 };
 

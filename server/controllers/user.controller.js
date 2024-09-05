@@ -49,16 +49,16 @@ export const UserController = {
         return res.status(400).json({ messages: ["Invalid user credentials"] });
       }
 
-      const token = jwt.sign({ id: foundUser._id }, process.env.JWT_SECRET, {
-        expiresIn: "1h",
-      });
+            const token = jwt.sign({id: foundUser._id}, process.env.JWT_SECRET, {
+                expiresIn: "1h"
+            })
 
-      res.json({ user: foundUser, token });
-    } catch {
-      console.log(error);
-      res.status(500).json({ messages: "Server error" });
-    }
-  },
+            res.json({user: foundUser, token})
+        } catch {
+            console.log(error)
+            res.status(500).json({message: "Server error"})
+        }
+    },
 
   updateUser: async (req, res) => {
     const options = {
