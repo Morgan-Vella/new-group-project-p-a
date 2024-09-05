@@ -1,10 +1,17 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link} from "react-router-dom";
+import '../Navbar.css'
 
 const Navbar = ({ children }) => {
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("token");
+    const token = localStorage.getItem("token");
+    if (token === null) {
+      console.log("Token successfully removed.");
+    } else {
+      console.log("Failed to remove token.");
+    }
     navigate("/login");
   };
 
@@ -15,7 +22,7 @@ const Navbar = ({ children }) => {
         <div className="d-flex align-items-center gap-3">
           <button className="btn btn-danger" onClick={handleLogout}>
             Logout
-          </button>
+          </Link>
           {children}
         </div>
       </div>

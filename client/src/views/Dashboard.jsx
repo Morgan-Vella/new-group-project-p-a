@@ -39,7 +39,7 @@ const Dashboard = () => {
                   to={`/details/${artwork._id}`}
                   className="text-decoration-none"
                 >
-                  <div className="card">
+                  <div className="card bg-image hover-zoom">
                     <img
                       src={`http://localhost:9999/${imagePath}`}
                       className="card-img-top"

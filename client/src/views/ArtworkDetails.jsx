@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 const ArtworkDetails = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [artwork, setArtwork] = useState(null);
   const navigate = useNavigate();

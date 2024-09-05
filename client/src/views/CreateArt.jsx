@@ -33,6 +33,8 @@ const CreateArt = () => {
           },
         }
       );
+      localStorage.setItem("artwork_id", response.data._id)
+      console.log(response.data._id)
       console.log(response.data);
       navigate("/");
       

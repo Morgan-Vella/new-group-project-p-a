@@ -8,7 +8,7 @@ import multer from "multer";
 import { fileURLToPath } from "url";
 const upload = multer({ dest: "uploads/" });
 
-// Manually define __dirname in ES module
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -37,7 +37,6 @@ export const ArtworkController = {
   },
 
 
-  // Convert string to ObjectId
 
   createArtwork: async (req, res) => {
     try {
@@ -78,7 +77,7 @@ export const ArtworkController = {
         return res.status(404).json({ error: "Artwork not found" });
       }
 
-      // If a new image is uploaded, delete the old image
+      
       if (req.file) {
         const oldImagePath = path.join(__dirname, "../", artwork.image);
         fs.unlink(oldImagePath, (err) => {
@@ -87,7 +86,7 @@ export const ArtworkController = {
           }
         });
 
-        // Update the image path in the database
+   
         req.body.image = req.file.path;
       }
 
@@ -106,7 +105,6 @@ export const ArtworkController = {
         return res.status(404).json({ error: "Artwork not found" });
       }
 
-      // Delete the image from the uploads folder
       const imagePath = path.join(__dirname, "../", artwork.image);
       fs.unlink(imagePath, (err) => {
         if (err) {
@@ -114,7 +112,7 @@ export const ArtworkController = {
         }
       });
 
-      // Delete the artwork from the database
+   
       await Artwork.findByIdAndDelete(req.params.id);
 
       res.json({ message: "Artwork and image deleted successfully" });
