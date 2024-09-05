@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../CreateArt.css";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 const CreateArt = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -50,6 +50,12 @@ const CreateArt = () => {
   };
 
   return (
+    <>
+    <Navbar>
+        <Link to="/" className="btn btn-primary">
+          Dashboard
+        </Link>
+      </Navbar>
     <div className="container" style={{ marginTop: "200px" }}>
       <h1>Create Artwork</h1>
       <form onSubmit={handleSubmit}>
@@ -91,6 +97,7 @@ const CreateArt = () => {
         <button type="submit">Submit</button>
       </form>
     </div>
+    </>
   );
 };
 

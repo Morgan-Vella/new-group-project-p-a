@@ -22,11 +22,11 @@ const Dashboard = () => {
   return (
     <>
       <Navbar>
-        <Link to="/create" className="btn btn-primary mb-4">
+        <Link to="/create" className="btn btn-primary">
           Create Artwork
         </Link>
       </Navbar>
-      <div className="container">
+      <div className="">
         <div className="row">
           {artworks.map((artwork) => {
             const imagePath = artwork.image.replace(/\\/g, "/");
@@ -39,7 +39,7 @@ const Dashboard = () => {
                 >
                   <div className="card">
                     <img
-                      src={`http://localhost:9999/${imagePath}`} 
+                      src={`http://localhost:9999/${imagePath}`}
                       className="card-img-top"
                       alt={artwork.name}
                     />
