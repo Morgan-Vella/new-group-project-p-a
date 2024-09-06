@@ -28,11 +28,10 @@ const Signup = () => {
           password: signupPassword,
         }
       );
-
+      console.log(response.data);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", signupName);
-      localStorage.setItem("user_id", response.data.user._id);
-      console.log(response.data.user._id);
+      localStorage.setItem("user_id", response.data._id);
       navigate("/");
     } catch (error) {
       if (error.response && error.response.data.messages) {
