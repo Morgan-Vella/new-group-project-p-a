@@ -28,6 +28,10 @@ PortfolioRouter.route("/portfolio/artwork/:id")
 
 PortfolioRouter.route("/portfolio/:id/edit").patch(UserController.updateUser);
 
-PortfolioRouter.route("/portfolio/artwork/:id/edit").patch(upload.single('image'), ArtworkController.updateArtwork);
+PortfolioRouter.route("/portfolio/artwork/:id").patch(
+  ArtworkController.updateArtwork
+);
+
+PortfolioRouter.route("/portfolio/artwork/:id").put(upload.single("image"), ArtworkController.updateArtwork);
 
 export default PortfolioRouter;

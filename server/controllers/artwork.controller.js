@@ -1,4 +1,17 @@
 import Artwork from "../models/artwork.model.js";
+
+import fs from "fs";
+import path from "path";
+
+import multer from "multer";
+
+import { fileURLToPath } from "url";
+const upload = multer({ dest: "uploads/" });
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 export const ArtworkController = {
   getAllArtworks: async (req, res) => {
     try {
@@ -23,11 +36,12 @@ export const ArtworkController = {
     }
   },
 
+
+
   createArtwork: async (req, res) => {
     try {
       const { name, description, user_id } = req.body;
       const image = req.file.path;
-
       const newArtwork = await Artwork.create({
         name,
         description,
@@ -55,18 +69,30 @@ export const ArtworkController = {
       new: true,
       runValidators: true,
     };
-    try {
-      const { name, description, user_id } = req.body;
-      const image = req.file.path;
 
-      const updatedArtwork = await Artwork.findByIdAndUpdate(req.params.id, {
-        name,
-        description,
-        image,
-        user_id,
-        }, options);  
-        res.json(updatedArtwork);
-      } catch (error) {
+    try {
+      const artwork = await Artwork.findById(req.params.id);
+
+      if (!artwork) {
+        return res.status(404).json({ error: "Artwork not found" });
+      }
+
+      
+      if (req.file) {
+        const oldImagePath = path.join(__dirname, "../", artwork.image);
+        fs.unlink(oldImagePath, (err) => {
+          if (err) {
+            console.error("Error deleting old image:", err);
+          }
+        });
+
+   
+        req.body.image = req.file.path;
+      }
+
+      const updatedArtwork = await Artwork.findByIdAndUpdate(req.params.id, req.body, options);
+      res.json(updatedArtwork);
+    } catch (error) {
       console.log(error);
       res.status(400).json(error);
     }
@@ -74,11 +100,25 @@ export const ArtworkController = {
 
   deleteArtwork: async (req, res) => {
     try {
-      const deletedArtwork = await Artwork.findByIdAndDelete(req.params.id);
-      res.json(deletedArtwork);
+      const artwork = await Artwork.findById(req.params.id);
+      if (!artwork) {
+        return res.status(404).json({ error: "Artwork not found" });
+      }
+
+      const imagePath = path.join(__dirname, "../", artwork.image);
+      fs.unlink(imagePath, (err) => {
+        if (err) {
+          console.error("Error deleting image:", err);
+        }
+      });
+
+   
+      await Artwork.findByIdAndDelete(req.params.id);
+
+      res.json({ message: "Artwork and image deleted successfully" });
     } catch (error) {
       console.log(error);
-      res.status(400).json(error);
+      res.status(400).json({ error: "Error deleting artwork" });
     }
   },
 };

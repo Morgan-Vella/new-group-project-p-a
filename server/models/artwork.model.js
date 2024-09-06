@@ -23,7 +23,7 @@ const ArtworkSchema = new Schema(
     },
     user_id: {
       type: Schema.Types.ObjectId,
-      ref: "users", 
+      ref: "users",
       required: true,
     },
   },
